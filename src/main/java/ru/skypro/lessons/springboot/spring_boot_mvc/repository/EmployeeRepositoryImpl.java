@@ -28,31 +28,29 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
     @Override
     public Employee getMaxSalary(){
-        List <Employee> employeesMaxSalary = new ArrayList<>();
         double maxSalary = employeeList.get(0).getSalary();
+        Employee employee = null;
         for (int i = 0; i < employeeList.size(); i++){
             maxSalary = Math.max(maxSalary, employeeList.get(i).getSalary());
-        }
-        for (int e = 0; e< employeeList.size(); e++) {
-            if (employeeList.get(e).getSalary() == maxSalary) {
-                employeesMaxSalary.add(employeeList.get(e));
+
+            if (employeeList.get(i).getSalary() == maxSalary) {
+                    employee= employeeList.get(i);
             }
         }
-        return employeesMaxSalary.get(0);
+        return employee;
     }
     @Override
     public Employee getMinSalary(){
-        List <Employee> employeesMinSalary = new ArrayList<>();
         double minSalary = employeeList.get(0).getSalary();
+        Employee employee = null;
         for (int i = 0; i < employeeList.size(); i++){
             minSalary = Math.min(minSalary,employeeList.get(i).getSalary());
-        }
-        for (int e = 0; e< employeeList.size(); e++) {
-            if (employeeList.get(e).getSalary() == minSalary) {
-                employeesMinSalary.add(employeeList.get(e));
+
+            if (employeeList.get(i).getSalary() == minSalary) {
+                employee= employeeList.get(i);
             }
         }
-        return employeesMinSalary.get(0);
+        return employee;
     }
     @Override
     public List<Employee> getAboveAveragePaidEmployee(){
