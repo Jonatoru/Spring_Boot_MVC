@@ -3,7 +3,7 @@ package ru.skypro.lessons.springboot.spring_boot_mvc.repository;
 import org.springframework.stereotype.Repository;
 import ru.skypro.lessons.springboot.spring_boot_mvc.pojo.Employee;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -20,47 +20,23 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
     @Override
     public double getSumSalary() {
-        double SumSalary = 0;
-        for (int i = 0; i < employeeList.size(); i++) {
-            SumSalary = SumSalary + employeeList.get(i).getSalary();
-        }
-        return SumSalary;
+        double sumSalary = employeeList.stream().map(x -> x.getSalary()).reduce(0.0,Double::sum);
+        return sumSalary;
     }
     @Override
     public Employee getMaxSalary(){
-        double maxSalary = employeeList.get(0).getSalary();
-        Employee employee = null;
-        for (int i = 0; i < employeeList.size(); i++){
-            maxSalary = Math.max(maxSalary, employeeList.get(i).getSalary());
-
-            if (employeeList.get(i).getSalary() == maxSalary) {
-                    employee= employeeList.get(i);
-            }
-        }
-        return employee;
+        Employee employeeMax = employeeList.stream().max(Comparator.comparingDouble(Employee::getSalary)).get();
+        return employeeMax;
     }
     @Override
     public Employee getMinSalary(){
-        double minSalary = employeeList.get(0).getSalary();
-        Employee employee = null;
-        for (int i = 0; i < employeeList.size(); i++){
-            minSalary = Math.min(minSalary,employeeList.get(i).getSalary());
-
-            if (employeeList.get(i).getSalary() == minSalary) {
-                employee= employeeList.get(i);
-            }
-        }
-        return employee;
+       Employee employeeMin = employeeList.stream().min(Comparator.comparingDouble(Employee::getSalary)).get();
+       return employeeMin;
     }
     @Override
     public List<Employee> getAboveAveragePaidEmployee(){
         double averageSalary = getSumSalary()/ employeeList.size();
-        List <Employee> AboveAveragePaidEmployee = new ArrayList<>();
-        for (int i = 0; i< employeeList.size(); i++) {
-            if (employeeList.get(i).getSalary() >= averageSalary) {
-                AboveAveragePaidEmployee.add(employeeList.get(i));
-            }
-        }
+        List <Employee> AboveAveragePaidEmployee = employeeList.stream().filter(employee -> employee.getSalary()>=averageSalary).toList();
         return AboveAveragePaidEmployee;
     }
 }
