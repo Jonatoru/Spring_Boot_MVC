@@ -5,9 +5,14 @@ import ru.skypro.lessons.springboot.spring_boot_mvc.pojo.Employee;
 import java.util.List;
 
 public interface EmployeeRepository {
-    public List<Employee> getAllEmployees();
-    public double getSumSalary();
-    public Employee getMaxSalary();
+    List<Employee> getAllEmployees();
+    double getSumSalary();
+    Employee getMaxSalary();
     Employee getMinSalary();
-    public List<Employee> getAboveAveragePaidEmployee();
+    List<Employee> getAboveAveragePaidEmployee();
+    void addEmployee(Employee employee);
+    Employee changeEmployee(Employee employee, int id);
+    Employee getEmployeeWithId(int id);
+    Employee deleteEmployeeWithId(int id);
+    List<Employee> getEmployeesWithHigherSalaries(double salary);
 }
